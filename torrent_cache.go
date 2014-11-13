@@ -42,7 +42,7 @@ func apiV1Handler(w http.ResponseWriter, r *http.Request) {
 			w.Write(content)
 			break
 		case "DELETE":
-			path := TORRENT_DIR + string(os.PathSeparator) + id + ".torrent"
+			/*path := TORRENT_DIR + string(os.PathSeparator) + id + ".torrent"
 			_, err := os.Stat(path)
 			if os.IsNotExist(err) {
 				w.WriteHeader(404)
@@ -58,6 +58,8 @@ func apiV1Handler(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(500)
 				return
 			}
+			*/
+			break
 		case "POST":
 			file, _, err := r.FormFile("torrent")
 			if nil != err {
