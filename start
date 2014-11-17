@@ -1,5 +1,5 @@
 #!/bin/bash
 echo "Mounting cached.tar.gz @ $HOME/.torrent_cache"
-./sh/mount.sh
+bin/mount
 echo "Running server"
 ./torrent_cache & echo $! > torrent_cache.pid

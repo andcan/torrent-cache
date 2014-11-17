@@ -1,2 +1,3 @@
 #!/bin/bash
+python bin/setup.py
 go build torrent_cache.go
