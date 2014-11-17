@@ -1,0 +1,10 @@
+{
+	"ImportPath": "github.com/torrent_cache",
+	"GoVersion": "go1.3.3",
+	"Deps": [
+		{
+			"ImportPath": "github.com/marksamman/bencode",
+			"Rev": "a00ecdc1e389c228312fc34a17c0592347bbf52e"
+		}
+	]
+}
