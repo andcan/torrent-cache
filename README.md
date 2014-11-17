@@ -4,7 +4,7 @@ Simple application to cache torrents written in Go.
 
 Requirements
 ------------
-archivemount command is not really required but `start.sh` and `stop.sh` won't work without it. They also expect a file named `cached.tar.gz`. Mount point is `$HOME/.torrent_cache`.
+`archivemount` command is not really required but `start.sh` and `stop.sh` won't work without it. They also expect a file named `cached.tar.gz`. Mount point is `$HOME/.torrent_cache`.
 
 
 Compiling
@@ -20,7 +20,7 @@ or
 Api
 ---
 Current version is v1.
-Api URL is http://{hostname}/api/{version}/{torrent_id}.
-* Caching torrent is done submitting a __POST__ request with a form containing torrent file with key __torrent__. Returns id associated with that torrent.
+Api URL is http://{hostname}/api/{version}/{torrent_infohash}.
+* Cache torrent submitting a __POST__ request with a form containing the file with key __torrent__. Returns torrent infohash.
 * To retrieve cached torrents submit a __GET__ request to api URL
-* Deletion is not allowed.
+* Deletion is implemented but disabled.
