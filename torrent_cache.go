@@ -2,9 +2,9 @@
 package main
 
 import (
-	//bencode "github.com/jackpal/bencode-go"
+	"github.com/marksamman/bencode"
 	"bytes"
-	"crypto/sha256"
+	"crypto/sha1"
 	"encoding/hex"
 	"io/ioutil"
 	"net/http"
@@ -26,19 +26,20 @@ func apiV1Handler(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(404)
 				return
 			} else if nil != err {
-				w.Write([]byte(err.Error()))
 				w.WriteHeader(500)
+				w.Write([]byte(err.Error()))
 				return
 			}
 			content, err := ioutil.ReadFile(path)
 			if nil != err {
-				w.Write([]byte(err.Error()))
 				w.WriteHeader(500)
+				w.Write([]byte(err.Error()))
 				return
 			}
 			header := w.Header()
 			header.Add("Content-Disposition", "inline; filename=" + id  + ".torrent")
 			header.Add("Content-Type", "application/x-torrent")
+			w.WriteHeader(200)
 			w.Write(content)
 			break
 		case "DELETE":
@@ -63,18 +64,24 @@ func apiV1Handler(w http.ResponseWriter, r *http.Request) {
 		case "POST":
 			file, _, err := r.FormFile("torrent")
 			if nil != err {
-				w.Write([]byte(err.Error()))
 				w.WriteHeader(500)
+				w.Write([]byte(err.Error()))
 				return
 			}
 			var buf bytes.Buffer
 			buf.ReadFrom(file)
 			bs := buf.Bytes()
-			hash := sha256.New()
-			_, err = hash.Write(bs)
-			if nil != err {
+			decoded, err := bencode.Decode(bytes.NewReader(bs))
+			if (nil != err) {
+				w.WriteHeader(400)
 				w.Write([]byte(err.Error()))
+				return
+			}
+			hash := sha1.New()
+			_, err = hash.Write(bencode.Encode(decoded["info"]))
+			if nil != err {
 				w.WriteHeader(500)
+				w.Write([]byte(err.Error()))				
 				return
 			}
 			id := hex.EncodeToString(hash.Sum(nil))
@@ -82,14 +89,14 @@ func apiV1Handler(w http.ResponseWriter, r *http.Request) {
 			
 			err = ioutil.WriteFile(path, bs, 0644)
 			if nil != err {
-				w.Write([]byte(err.Error()))
 				w.WriteHeader(500)
+				w.Write([]byte(err.Error()))
 				return
 			}
+			w.WriteHeader(200)
 			w.Write([]byte(id))
 			break
 	}
-	w.WriteHeader(200)
 }
 
 func main() {
