@@ -28,5 +28,5 @@ cached.tar.gz
 cached.tar.gz.orig
 
 #executable related files
-torrent_cache
+torrent-cache
 torrent_cache.pid
