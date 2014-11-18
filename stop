@@ -1,5 +1,5 @@
 echo "Stopping server"
-kill $(cat torrent_cache.pid)
-rm torrent_cache.pid
+kill $(cat torrent-cache.pid)
+rm torrent-cache.pid
 echo "Unmounting cached.tar.gz @ $HOME/.torrent_cache"
 bin/umount

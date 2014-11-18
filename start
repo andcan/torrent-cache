@@ -2,4 +2,4 @@
 echo "Mounting cached.tar.gz @ $HOME/.torrent_cache"
 bin/mount
 echo "Running server"
-./torrent_cache & echo $! > torrent_cache.pid
+$GOPATH/bin/torrent-cache & echo $! > torrent-cache.pid

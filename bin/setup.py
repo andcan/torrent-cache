@@ -18,4 +18,5 @@ if not os.path.exists(dir) :
 
 call(["godep", "get"])
 call(["go", "build"])
+call(["go", "install"])
 
